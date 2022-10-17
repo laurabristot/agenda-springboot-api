@@ -22,5 +22,24 @@ public class ContatoController {
     Contato cont = contatoRepository.save(contato);
     return new ResponseEntity<Contato>(cont, HttpStatus.CREATED);
     }
+    
+    @PutMapping(value = "/", produces = "application/json")
+public ResponseEntity<Contato> atualizar(@RequestBody Contato contato){
+	Contato cont = contatoRepository.save(contato);
+	return new ResponseEntity<Contato>(cont, HttpStatus.OK);
+}
+    
+    @DeleteMapping(value = "/")
+@ResponseBody //a resposta vai se dar no corpo da requisição
+public ResponseEntity<String> delete(@RequestParam Long idContato){
+	contatoRepository.deleteById(idContato);
+return new ResponseEntity<String>("contato deletado com sucesso!", HttpStatus.OK);
+}
+    
+    @GetMapping(value = "/{idContato}") //como vem em parametro tem que por as chaves
+    public ResponseEntity<Contato> contadoById(@PathVariable(value = "idContato") Long idContato) {
+        Contato cont = contatoRepository.findById(idContato).get();
+        return new ResponseEntity<Contato>(cont, HttpStatus.OK);
+    }
 
 }
