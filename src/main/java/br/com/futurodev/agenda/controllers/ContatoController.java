@@ -35,11 +35,16 @@ public class ContatoController {
 	contatoRepository.deleteById(idContato);
 	return new ResponseEntity<String>("contato deletado com sucesso!", HttpStatus.OK);
 }
-    
     @GetMapping(value = "/{idContato}") //como vem em parametro tem que por as chaves
     	public ResponseEntity<Contato> contadoById(@PathVariable(value = "idContato") Long idContato) {
     	Contato cont = contatoRepository.findById(idContato).get();
     	return new ResponseEntity<Contato>(cont, HttpStatus.OK);
+    }
+
+    @GetMapping(value= "/buscar-por-nome", produces = "application/json")
+	public ResponseEntity<List<Contato>> getContatoById(@RequestParam(name = "nome") String nome){
+	List<Contato> contatos = contatoRepository.getContatoByName(nome);
+	return new ResponseEntity<List<Contato>>(contatos, HttpStatus.OK);
     }
 
 }
